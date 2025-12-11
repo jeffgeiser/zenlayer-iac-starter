@@ -61,7 +61,7 @@ resource "zenlayercloud_zec_instance" "web_nodes" {
   subnet_id          = zenlayercloud_zec_subnet.test_subnet.id
   security_group_id  = zenlayercloud_zec_security_group.web_sg.id
   availability_zone  = "na-west-1a"
-  password           = "ZenTest!2025"
+  password           = var.instance_password
   system_disk_size   = 40
   
   # Ensure rules are active before booting (good practice)
