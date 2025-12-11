@@ -12,7 +12,9 @@ The `terraform/` directory contains the blueprint for deploying a load-balanced 
 * A Zenlayer Cloud account (API Keys required)
 
 ### Usage
-1. Export your API keys:
+1. Clone this thing
+2. Export your API keys:
    ```bash
    export ZENLAYERCLOUD_ACCESS_KEY_ID="your_access_key"
    export ZENLAYERCLOUD_ACCESS_KEY_PASSWORD="your_secret_key"
+3. Make sure you have terraform installed and run terraform init/plan/apply!
