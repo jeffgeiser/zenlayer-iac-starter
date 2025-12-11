@@ -35,3 +35,12 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# --- Added for Part 2 (Ansible) ---
+*.retry
+*.log
+inventory.ini
+
+# --- OS Generated Files ---
+.DS_Store
+Thumbs.db
