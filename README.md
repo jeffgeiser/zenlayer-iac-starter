@@ -13,8 +13,15 @@ The `terraform/` directory contains the blueprint for deploying a load-balanced 
 
 ### Usage
 1. Clone this thing
-2. Export your API keys (grab this from the Zenlayer portal):
-   ```bash
+2. Set Your Password: Create a file named terraform.tfvars inside your local terraform/ directory with the following:
+
+instance_password = "YourSecurePassword123!"
+
+Note: This file is ignored by Git, so your secrets stay safe.
+
+3. Export your API keys (grab this from the Zenlayer portal):
+   
    export ZENLAYERCLOUD_ACCESS_KEY_ID="your_access_key"
    export ZENLAYERCLOUD_ACCESS_KEY_PASSWORD="your_secret_key"
-3. Make sure you have terraform installed and run terraform init/plan/apply!
+   
+5. Make sure you have terraform installed and run terraform init/plan/apply!
