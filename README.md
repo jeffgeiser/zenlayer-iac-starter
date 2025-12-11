@@ -13,7 +13,7 @@ The `terraform/` directory contains the blueprint for deploying a load-balanced 
 
 ### Usage
 1. Clone this thing
-2. Export your API keys:
+2. Export your API keys (grab this from the Zenlayer portal):
    ```bash
    export ZENLAYERCLOUD_ACCESS_KEY_ID="your_access_key"
    export ZENLAYERCLOUD_ACCESS_KEY_PASSWORD="your_secret_key"
