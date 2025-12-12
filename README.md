@@ -17,12 +17,41 @@ The code is organized into chapters:
 
 Follow these steps to deploy the infrastructure from **Part 1** .
 
-### 1. Prerequisites
+1. Prerequisites
 * [Terraform v1.0+](https://developer.hashicorp.com/terraform/downloads)
 * A [Zenlayer Cloud](https://console.zenlayer.com/) account (API Keys required)
 
-### 2. Setup
+* 
+
+2. Setup
 Clone the repository and navigate to the Part 1 directory:
 ```bash
 git clone [https://github.com/jeffgeiser/zenlayer-iac-starter.git](https://github.com/jeffgeiser/zenlayer-iac-starter.git)
 cd zenlayer-iac-starter/01-basic-cluster
+
+3. Configure Secrets
+Create a file named terraform.tfvars inside the 01-basic-cluster directory to set your server password securely:
+
+Terraform
+
+# 01-basic-cluster/terraform.tfvars
+instance_password = "YourSecurePassword123!"
+> Note: This file is ignored by Git, so your credentials remain safe.
+
+4. Deploy
+Export your Zenlayer API keys (found in the Console under "Security"):
+
+Bash
+
+export ZENLAYERCLOUD_ACCESS_KEY_ID="your_access_key_id"
+export ZENLAYERCLOUD_ACCESS_KEY_PASSWORD="your_secret_key"
+Initialize and apply the Terraform configuration:
+
+Bash
+
+terraform init
+terraform apply
+Result: You will see an Apply complete! message and the terminal will output your new Load Balancer IP.
+
+Part 2 (Ansible Integration)
+For the advanced configuration guide, navigate to the 02-ansible-integration directory and refer to the instructions.
