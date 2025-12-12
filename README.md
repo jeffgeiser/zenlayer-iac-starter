@@ -1,27 +1,28 @@
-# zenlayer-iac-starter
-Production-ready automation for Zenlayer Elastic Compute (ZEC). Includes Terraform blueprints for VPC/Compute/LB deployment and Ansible playbooks for configuration.
-# Automating Zenlayer Elastic Compute
+# Zenlayer IaC Starter
 
-This repository contains the source code for the blog series "Automating Zenlayer Infrastructure."
+**Production-ready automation for Zenlayer Elastic Compute (ZEC).**
 
-## Part 1: Terraform Infrastructure
-The `terraform/` directory contains the blueprint for deploying a load-balanced web cluster in the `na-west-1` region.
+This repository provides a complete blueprint for deploying a load-balanced web cluster using Terraform and Ansible.
 
-### Prerequisites
-* Terraform v1.0+
-* A Zenlayer Cloud account (API Keys required)
+## Repository Structure
 
-### Usage
-1. Clone this thing
-2. Set Your Password: Create a file named terraform.tfvars inside your local terraform/ directory with the following:
+The code is organized into chapters:
 
-instance_password = "YourSecurePassword123!"
+* **`01-basic-cluster` (Part 1):** A "Pure Terraform" implementation. Deploys the VPC, Security Groups, Compute Nodes, and Load Balancer.
+* **`02-ansible-integration` (Part 2):** Builds upon the basic cluster by adding dynamic inventory generation and Ansible playbooks to configure the servers (Nginx + Web Content).
 
-Note: This file is ignored by Git, so your secrets stay safe.
+---
 
-3. Export your API keys (grab this from the Zenlayer portal):
-   
-   export ZENLAYERCLOUD_ACCESS_KEY_ID="your_access_key"
-   export ZENLAYERCLOUD_ACCESS_KEY_PASSWORD="your_secret_key"
-   
-5. Make sure you have terraform installed and run terraform init/plan/apply!
+## Quick Start: Part 1 (Basic Cluster)
+
+Follow these steps to deploy the infrastructure from **Part 1** .
+
+### 1. Prerequisites
+* [Terraform v1.0+](https://developer.hashicorp.com/terraform/downloads)
+* A [Zenlayer Cloud](https://console.zenlayer.com/) account (API Keys required)
+
+### 2. Setup
+Clone the repository and navigate to the Part 1 directory:
+```bash
+git clone [https://github.com/jeffgeiser/zenlayer-iac-starter.git](https://github.com/jeffgeiser/zenlayer-iac-starter.git)
+cd zenlayer-iac-starter/01-basic-cluster
