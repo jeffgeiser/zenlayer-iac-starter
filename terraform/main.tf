@@ -64,7 +64,7 @@ resource "zenlayercloud_zec_instance" "web_nodes" {
   password           = var.instance_password
   system_disk_size   = 40
   
-  # Ensure rules are active before booting (good practice)
+  # Ensure rules are active before booting 
   depends_on = [zenlayercloud_zec_security_group_rule_set.web_rules]
 }
 
@@ -91,7 +91,7 @@ resource "zenlayercloud_zlb_backend" "attach_vms" {
   count       = 2
   zlb_id      = zenlayercloud_zlb_instance.web_lb.id
   
-  # The Real Fix: Extracting the UUID correctly
+  # Extracting the UUID correctly
   listener_id = split(":", zenlayercloud_zlb_listener.http.id)[1]
 
   backends {
