@@ -35,7 +35,6 @@ Create a file named `terraform.tfvars` inside the `01-basic-cluster` directory t
 # 01-basic-cluster/terraform.tfvars
 instance_password = "YourSecurePassword123!"
 ```
-*> **Note:** This file is ignored by Git, so your credentials remain safe.*
 
 ### 4. Deploy
 Export your Zenlayer API keys (found in the Console under "Security"):
