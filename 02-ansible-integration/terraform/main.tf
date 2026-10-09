@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    zenlayercloud = {
-      source = "zenlayer/zenlayercloud"
-    }
-  }
-}
-
 provider "zenlayercloud" {}
 
 # 0. DATA SOURCES
@@ -36,34 +28,42 @@ resource "zenlayercloud_zec_security_group_rule_set" "web_rules" {
   security_group_id = zenlayercloud_zec_security_group.web_sg.id
 
   ingress {
-    policy      = "accept"
-    port        = "22"
-    protocol    = "tcp"
-    cidr_block  = "0.0.0.0/0"
-    priority    = 1
+    policy     = "accept"
+    port       = "22"
+    protocol   = "tcp"
+    cidr_block = var.ssh_allowed_cidr
+    priority   = 1
   }
 
   ingress {
-    policy      = "accept"
-    port        = "80"
-    protocol    = "tcp"
-    cidr_block  = "0.0.0.0/0"
-    priority    = 1
+    policy     = "accept"
+    port       = "80"
+    protocol   = "tcp"
+    cidr_block = "0.0.0.0/0"
+    priority   = 1
   }
 }
 
 # 3. COMPUTE
+# SSH key pair used to log in to the nodes (key-based auth instead of a password).
+resource "zenlayercloud_key_pair" "admin" {
+  key_name        = var.ssh_key_name
+  public_key      = var.ssh_public_key
+  key_description = "Managed by zenlayer-iac-starter"
+}
+
 resource "zenlayercloud_zec_instance" "web_nodes" {
-  count              = 2
-  instance_name      = "tf-zec-node-${count.index + 1}"
-  instance_type      = "z2a.cpu.1"
-  image_id           = data.zenlayercloud_zec_images.ubuntu.images[0].id
-  subnet_id          = zenlayercloud_zec_subnet.test_subnet.id
-  security_group_id  = zenlayercloud_zec_security_group.web_sg.id
-  availability_zone  = "na-west-1a"
-  password           = var.instance_password
-  system_disk_size   = 40
-  
+  count             = 2
+  instance_name     = "tf-zec-node-${count.index + 1}"
+  instance_type     = "z2a.cpu.1"
+  image_id          = data.zenlayercloud_zec_images.ubuntu.images[0].id
+  subnet_id         = zenlayercloud_zec_subnet.test_subnet.id
+  security_group_id = zenlayercloud_zec_security_group.web_sg.id
+  availability_zone = "na-west-1a"
+  key_id            = zenlayercloud_key_pair.admin.id
+  password          = var.instance_password
+  system_disk_size  = 40
+
   # Ensure rules are active before booting 
   depends_on = [zenlayercloud_zec_security_group_rule_set.web_rules]
 }
@@ -88,9 +88,9 @@ resource "zenlayercloud_zlb_listener" "http" {
 }
 
 resource "zenlayercloud_zlb_backend" "attach_vms" {
-  count       = 2
-  zlb_id      = zenlayercloud_zlb_instance.web_lb.id
-  
+  count  = 2
+  zlb_id = zenlayercloud_zlb_instance.web_lb.id
+
   # Extracting the UUID correctly
   listener_id = split(":", zenlayercloud_zlb_listener.http.id)[1]
 
