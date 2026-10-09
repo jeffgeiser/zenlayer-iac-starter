@@ -1,0 +1,32 @@
+name: terraform
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: ["01-basic-cluster", "02-ansible-integration/terraform"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+      - name: terraform fmt
+        run: terraform fmt -check -recursive -diff
+      - name: terraform init
+        working-directory: ${{ matrix.dir }}
+        run: terraform init -backend=false -input=false
+      - name: terraform validate
+        working-directory: ${{ matrix.dir }}
+        run: terraform validate
